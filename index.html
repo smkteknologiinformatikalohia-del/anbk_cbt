@@ -1,1 +1,77 @@
-sistem Masih Dalam Pengembangan
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Sedang Maintenance - Portal Pemeliharaan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glow-effect {
+            box-shadow: 0 0 50px -10px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-blue-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-4 py-4 sm:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-blue-600/10 text-blue-500 rounded-xl border border-blue-500/20">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">CoreEngine</span>
+                    <span class="text-xs block text-slate-500 font-medium">Status Kontrol</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    Pemeliharaan Aktif
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-12 sm:px-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+        
+        <!-- Left Column: Information (7 Cols on large screens) -->
+        <div class="lg:col-span-7 space-y-6">
+            <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs text-blue-400 font-semibold tracking-wider uppercase">
+                    <i data-lucide="wrench" class="w-3.5 h-3.5"></i> Pembaruan Infrastruktur
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                    Sistem Sedang <span class="bg-gradient-to-r from-blue-500 via-indigo-400 to-purple-500 bg-clip-text text-transparent">Maintenance</span>
+                </h1>
+                <p class="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed">
+                    Kami sedang meningkatkan infrastruktur server untuk memberikan pengalaman yang lebih cepat, aman, dan andal. Mohon tunggu beberapa saat, kami akan segera kembali online.
+                </p>
+            </div>
+        </div>
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-8 px-4 sm:px-8 text-center text-xs text-slate-600">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 CoreEngine. Hak Cipta Dilindungi Undang-Undang.</p>
+            <p class="flex items-center gap-1">
+                Sistem optimasi infrastruktur aktif <i data-lucide="shield-check" class="w-4.5 h-4.5 text-emerald-500"></i>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
