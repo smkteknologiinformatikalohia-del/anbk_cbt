@@ -35,6 +35,20 @@
             background-position: center 60%;
             background-size: 80%;
         }
+        /* Custom Scrollbar for split panes in Exam Sheet */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -385,103 +399,156 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 4. SCREEN: SISWA - ACTIVE EXAM SHEET (MOCKUP) -->
+    <!-- 4. SCREEN: SISWA - ACTIVE EXAM SHEET (ANBK REAL STYLE) -->
     <!-- ========================================== -->
-    <div id="exam-sheet-screen" class="hidden flex-grow flex flex-col bg-gray-100">
-        <!-- Exam Top Header -->
-        <header class="bg-blue-900 text-white py-3 px-6 flex justify-between items-center shadow-md">
-            <div class="flex items-center space-x-2">
-                <span class="bg-yellow-500 text-slate-900 font-bold px-2 py-0.5 rounded text-xs">ANBK</span>
-                <span class="text-sm font-semibold hidden md:inline">Mata Ujian: BARON AKSI SMA</span>
+    <div id="exam-sheet-screen" class="hidden flex-grow flex flex-col bg-gray-200">
+        <!-- Top Status Bar & Main Header (ANBK Dark Teal/Blue Theme) -->
+        <header class="bg-[#2c3e50] text-white flex flex-col shadow-md">
+            <!-- Secondary Bar with Exam Info -->
+            <div class="bg-[#1a252f] px-4 py-2 flex justify-between items-center text-xs border-b border-slate-700">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-[#f1c40f] text-[#2c3e50] font-black px-2 py-0.5 rounded text-[10px]">AS_AKM_SMA</span>
+                    <span class="font-bold text-slate-300">Mata Ujian: <span class="text-white">BARON AKSI & ANGKET SMA</span></span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-slate-400">Peserta: <strong class="text-white">ARIF (PUSAT-001)</strong></span>
+                </div>
             </div>
-            <!-- Timer Display -->
-            <div class="flex items-center space-x-3 bg-blue-955/50 border border-blue-700 px-4 py-1.5 rounded-lg">
-                <i class="fa-regular fa-clock text-yellow-400"></i>
-                <span class="text-xs text-slate-200 hidden sm:inline">Sisa Waktu:</span>
-                <span id="exam-timer" class="font-mono font-bold text-sm text-white">01:59:52</span>
-            </div>
-            <div>
-                <button onclick="finishExamMock()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded font-bold transition">
-                    Selesai Tes
-                </button>
+
+            <!-- Primary Header with Timer and Font Control -->
+            <div class="px-4 py-3 flex justify-between items-center bg-[#2c3e50]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                        <svg viewBox="0 0 100 100" class="w-7 h-7 text-white fill-current" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,30 90,75 50,95 10,75 10,30" fill="none" stroke="white" stroke-width="4"/>
+                            <path d="M50,20 L75,55 L25,55 Z" fill="white"/>
+                            <circle cx="50" cy="40" r="8" fill="#f1c40f"/>
+                            <rect x="40" y="60" width="20" height="6" fill="white" rx="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-black tracking-wider uppercase leading-none text-white">ASESMEN NASIONAL</h1>
+                        <p class="text-[10px] text-slate-300 mt-0.5">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</p>
+                    </div>
+                </div>
+
+                <!-- Center/Right: Timer Display in Classic ANBK Orange/Yellow box -->
+                <div class="flex items-center space-x-3">
+                    <!-- Timer Widget -->
+                    <div class="bg-[#f1c40f] text-slate-900 px-4 py-2 rounded font-extrabold flex items-center space-x-2 shadow-inner">
+                        <i class="fa-regular fa-clock text-slate-900 animate-pulse text-sm"></i>
+                        <span class="text-xs font-bold uppercase tracking-wider hidden sm:inline">Sisa Waktu :</span>
+                        <span id="exam-timer" class="font-mono text-base tracking-widest font-black">01:59:52</span>
+                    </div>
+
+                    <!-- Information Button -->
+                    <button onclick="alert('Asesmen Kompetensi Minimum (AKM) terdiri dari soal Literasi & Karakter.')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-2 rounded font-bold shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info"></i> <span class="hidden sm:inline">Informasi</span> Soal
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Main Question layout -->
-        <main class="flex-grow flex flex-col lg:flex-row p-4 gap-4 max-w-7xl mx-auto w-full">
-            <!-- Left Side: Question Sheet -->
-            <div class="flex-grow bg-white rounded-xl shadow-md p-6 flex flex-col justify-between border border-gray-200 min-h-[450px]">
-                <div>
-                    <!-- Navigation / Index Header -->
-                    <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-4">
-                        <span class="text-blue-600 font-bold text-lg">SOAL NOMOR: <span id="current-question-num" class="text-xl">1</span></span>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs text-slate-500">Ukuran Font Soal:</span>
-                            <button onclick="changeFontSize('small')" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-xs font-semibold">A</button>
-                            <button onclick="changeFontSize('medium')" class="px-2 py-0.5 bg-slate-200 hover:bg-slate-300 rounded text-sm font-semibold">A</button>
-                            <button onclick="changeFontSize('large')" class="px-2 py-0.5 bg-slate-300 hover:bg-slate-400 rounded text-base font-semibold">A</button>
+        <!-- Main Splitscreen Panel (ANBK Style scrollable layout) -->
+        <main class="flex-grow flex flex-col lg:flex-row p-3 gap-3 overflow-hidden max-w-7xl mx-auto w-full h-[calc(100vh-160px)]">
+            
+            <!-- LEFT PANEL: Reading Stimulus / Wacana Literasi (Scrollable) -->
+            <div class="w-full lg:w-1/2 bg-white rounded-xl shadow-md border border-gray-300 flex flex-col overflow-hidden">
+                <!-- Panel Header -->
+                <div class="bg-slate-100 px-4 py-3 border-b border-gray-300 flex justify-between items-center">
+                    <span class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-file-invoice mr-2 text-blue-600"></i> Wacana Literasi / Stimulus</span>
+                    <span class="text-[10px] bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full font-bold">Informasi Utama</span>
+                </div>
+                <!-- Scrollable Body content -->
+                <div class="flex-grow p-5 overflow-y-auto custom-scrollbar text-gray-700 space-y-4" id="stimulus-panel">
+                    <h3 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Menuju Era Digitalisasi Pendidikan Indonesia</h3>
+                    
+                    <p class="text-sm leading-relaxed">
+                        Evaluasi pendidikan di Indonesia terus beradaptasi dengan kemajuan teknologi dunia. **Asesmen Nasional Berbasis Komputer (ANBK)** merupakan salah satu terobosan strategis Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi untuk menggantikan sistem evaluasi lama demi memetakan mutu pendidikan secara lebih komprehensif, obyektif, dan adil.
+                    </p>
+
+                    <div class="p-3 bg-blue-50 border-l-4 border-blue-500 rounded text-xs text-blue-900 leading-relaxed italic">
+                        "Evaluasi sejati tidak hanya mengukur akhir dari sebuah pencapaian akademik, tetapi mendiagnosis kesiapan ekosistem pendidikan secara menyeluruh untuk menyongsong tantangan peradaban digital."
+                    </div>
+
+                    <p class="text-sm leading-relaxed">
+                        Asesmen Nasional tidak mengevaluasi capaian peserta didik secara individu, melainkan mengevaluasi dan memetakan sistem pendidikan baik berupa input, proses, maupun hasil. Instrumen utamanya terdiri dari **Asesmen Kompetensi Minimum (AKM)**, Survei Karakter, serta Survei Lingkungan Belajar. 
+                    </p>
+
+                    <p class="text-sm leading-relaxed">
+                        AKM dirancang secara holistik untuk mengukur kapasitas berpikir logis-sistematis siswa melalui literasi membaca dan literasi numerasi. Kesiapan jaringan internet (bandwidth), keandalan kelistrikan sekolah, kesiapan proktor dalam melakukan sinkronisasi database, serta distribusi token ujian yang aman merupakan pilar-pilar penting penentu kelancaran pelaksanaan ujian terkomputerisasi ini di lapangan.
+                    </p>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Current Question & Options (Scrollable) -->
+            <div class="w-full lg:w-1/2 flex flex-col gap-3 overflow-hidden">
+                
+                <!-- Main Question Card inside the Right Panel -->
+                <div class="flex-grow bg-white rounded-xl shadow-md border border-gray-300 flex flex-col justify-between overflow-hidden">
+                    <!-- Question Control Header -->
+                    <div class="bg-blue-50 px-4 py-2.5 border-b border-gray-300 flex justify-between items-center">
+                        <span class="text-blue-900 font-extrabold text-sm tracking-wider flex items-center gap-1.5">
+                            <span class="bg-blue-600 text-white rounded px-2.5 py-0.5 text-xs font-black">SOAL</span> 
+                            NOMOR : <span id="current-question-num" class="text-blue-600 text-lg">1</span>
+                        </span>
+                        
+                        <!-- Font Sizer (ANBK Classic) -->
+                        <div class="flex items-center space-x-2 bg-white px-2 py-1 rounded border border-gray-300">
+                            <span class="text-[10px] font-bold text-slate-500">Ukuran Font Soal :</span>
+                            <button onclick="changeFontSize('small')" class="w-6 h-6 hover:bg-slate-100 rounded text-xs font-semibold border border-gray-200">A-</button>
+                            <button onclick="changeFontSize('medium')" class="w-6 h-6 hover:bg-slate-100 rounded text-sm font-bold border border-gray-200 bg-slate-100">A</button>
+                            <button onclick="changeFontSize('large')" class="w-6 h-6 hover:bg-slate-100 rounded text-base font-black border border-gray-200">A+</button>
                         </div>
                     </div>
 
-                    <!-- Question Body -->
-                    <div id="question-text" class="text-gray-800 leading-relaxed text-base mb-6 transition-all duration-200">
-                        Dalam proses evaluasi Asesmen Nasional Berbasis Komputer (ANBK), salah satu aspek penilaian utama adalah Asesmen Kompetensi Minimum (AKM) yang menguji literasi membaca dan numerasi siswa. Berdasarkan hal tersebut, manakah tindakan yang paling tepat untuk mengoptimalkan persiapan infrastruktur sekolah?
+                    <!-- Scrollable Question Body and Options -->
+                    <div class="flex-grow p-5 overflow-y-auto custom-scrollbar flex flex-col justify-between">
+                        <div>
+                            <!-- Question Text -->
+                            <div id="question-text" class="text-slate-800 leading-relaxed text-sm md:text-base font-medium mb-6 transition-all duration-200">
+                                Dalam proses evaluasi Asesmen Nasional Berbasis Komputer (ANBK), salah satu aspek penilaian utama adalah Asesmen Kompetensi Minimum (AKM) yang menguji literasi membaca dan numerasi siswa. Berdasarkan hal tersebut, manakah tindakan yang paling tepat untuk mengoptimalkan persiapan infrastruktur sekolah?
+                            </div>
+
+                            <!-- Options Block -->
+                            <div class="space-y-3" id="options-container">
+                                <!-- Generated Dynamically by JS -->
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Answer Options -->
-                    <div class="space-y-3" id="options-container">
-                        <!-- Option A -->
-                        <label class="flex items-start p-3 border border-gray-200 rounded-lg hover:bg-blue-50/50 cursor-pointer transition">
-                            <input type="radio" name="exam-option" value="A" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500">
-                            <span class="font-bold text-gray-700 mr-2">A.</span>
-                            <span class="text-gray-600">Fokus sepenuhnya pada latihan soal tanpa menguji kekuatan bandwidth laboratorium komputer.</span>
+                    <!-- BOTTOM NAVIGATION: ANBK Signature Control Buttons -->
+                    <div class="bg-slate-50 px-4 py-3 border-t border-gray-300 flex justify-between items-center gap-2">
+                        <!-- SOAL SEBELUMNYA (Yellowish-gray style) -->
+                        <button onclick="prevQuestion()" class="bg-[#f39c12] hover:bg-[#e67e22] text-white font-black py-2 px-3 sm:px-4 rounded shadow-md text-xs sm:text-sm tracking-wider uppercase transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrow-left"></i> Soal Sebelumnya
+                        </button>
+                        
+                        <!-- RAGU - RAGU checkbox (Classic yellow warning block) -->
+                        <label class="flex items-center space-x-2 bg-[#f1c40f] hover:bg-[#f39c12] text-slate-900 font-extrabold px-3 sm:px-5 py-2 rounded shadow-md border border-yellow-500 cursor-pointer select-none transition">
+                            <input type="checkbox" id="ragu-ragu" class="rounded text-yellow-600 focus:ring-yellow-500 h-4 w-4 border-yellow-600 cursor-pointer">
+                            <span class="text-xs sm:text-sm tracking-wide">Ragu - Ragu</span>
                         </label>
-                        <!-- Option B -->
-                        <label class="flex items-start p-3 border border-gray-200 rounded-lg hover:bg-blue-50/50 cursor-pointer transition">
-                            <input type="radio" name="exam-option" value="B" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500">
-                            <span class="font-bold text-gray-700 mr-2">B.</span>
-                            <span class="text-gray-600">Melakukan uji simulasi dan sinkronisasi proktor secara menyeluruh beberapa hari sebelum ujian utama.</span>
-                        </label>
-                        <!-- Option C -->
-                        <label class="flex items-start p-3 border border-gray-200 rounded-lg hover:bg-blue-50/50 cursor-pointer transition">
-                            <input type="radio" name="exam-option" value="C" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500">
-                            <span class="font-bold text-gray-700 mr-2">C.</span>
-                            <span class="text-gray-600">Mengandalkan sistem mandiri siswa tanpa koordinasi dengan tim teknis pusat.</span>
-                        </label>
+
+                        <!-- SOAL BERIKUTNYA (Teal/Blue style) -->
+                        <button id="next-question-btn" onclick="nextQuestion()" class="bg-[#2980b9] hover:bg-[#3498db] text-white font-black py-2 px-3 sm:px-4 rounded shadow-md text-xs sm:text-sm tracking-wider uppercase transition flex items-center gap-1.5">
+                            Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Footer Navigation inside Question Card -->
-                <div class="flex flex-wrap justify-between items-center gap-3 pt-6 border-t border-gray-100 mt-6">
-                    <button onclick="prevQuestion()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-6 rounded-lg transition text-sm flex items-center">
-                        <i class="fa-solid fa-chevron-left mr-2"></i> SOAL SEBELUMNYA
-                    </button>
-                    
-                    <label class="flex items-center space-x-2 bg-yellow-100 text-yellow-800 font-bold px-4 py-2.5 rounded-lg border border-yellow-200 cursor-pointer select-none">
-                        <input type="checkbox" id="ragu-ragu" class="rounded text-yellow-600 focus:ring-yellow-500 h-4 w-4">
-                        <span class="text-sm">RAGU - RAGU</span>
-                    </label>
-
-                    <button onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition text-sm flex items-center">
-                        SOAL BERIKUTNYA <i class="fa-solid fa-chevron-right ml-2"></i>
-                    </button>
+                <!-- Bottom Sidebar / Drawer for Mobile & Small Screen: Question Navigation trigger -->
+                <div class="bg-white rounded-xl shadow border border-gray-300 p-4">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 pb-1 border-b border-gray-200 flex justify-between items-center">
+                        <span><i class="fa-solid fa-th-list mr-1.5 text-blue-600"></i> Navigasi Nomor Soal</span>
+                        <span class="text-[10px] text-slate-400">Pilih nomor soal di bawah ini</span>
+                    </h3>
+                    <div class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2" id="nav-numbers-grid">
+                        <!-- Navigation grid dynamically populated with selection codes (e.g. 1 A, 2 B) -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Side: Question Navigation Map -->
-            <div class="w-full lg:w-80 bg-white rounded-xl shadow-md p-5 border border-gray-200">
-                <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
-                    Navigasi Soal
-                </h3>
-                <div class="grid grid-cols-5 gap-2.5" id="nav-numbers-grid">
-                    <!-- Nav buttons will be generated by JS -->
-                </div>
-                <div class="mt-6 pt-4 border-t border-gray-100 space-y-2 text-xs text-gray-500">
-                    <div class="flex items-center"><span class="w-4 h-4 rounded bg-blue-600 inline-block mr-2"></span> Terjawab</div>
-                    <div class="flex items-center"><span class="w-4 h-4 rounded bg-yellow-400 inline-block mr-2"></span> Ragu-ragu</div>
-                    <div class="flex items-center"><span class="w-4 h-4 rounded border border-gray-300 inline-block mr-2"></span> Belum Terjawab</div>
-                </div>
-            </div>
         </main>
     </div>
 
@@ -683,7 +750,7 @@
     </div>
 
     <!-- Standard Footer -->
-    <footer class="bg-gray-800 text-gray-400 text-center py-4 text-xs mt-auto">
+    <footer class="bg-gray-800 text-gray-400 text-center py-4 text-xs mt-auto border-t border-slate-700">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2">
             <p>&copy; 2026 Pusat Asesmen Pendidikan - Kemendikbudristek RI</p>
             <div class="flex space-x-4">
@@ -706,33 +773,39 @@
             answers: {} // { questionId: {option, ragu} }
         };
 
-        // Mock Questions data
+        // Mock Questions data with Wacana/Stimulus matching AKM ANBK style
         const MOCK_QUESTIONS = [
             {
                 id: 1,
-                text: "Dalam proses evaluasi Asesmen Nasional Berbasis Komputer (ANBK), salah satu aspek penilaian utama adalah Asesmen Kompetensi Minimum (AKM) yang menguji literasi membaca dan numerasi siswa. Berdasarkan hal tersebut, manakah tindakan yang paling tepat untuk mengoptimalkan persiapan infrastruktur sekolah?",
+                stimulusTitle: "Menuju Era Digitalisasi Pendidikan Indonesia",
+                text: "Berdasarkan wacana di panel sebelah kiri, manakah tindakan paling strategis untuk memastikan kelancaran infrastruktur sekolah sebelum pelaksanaan ujian komputer ANBK utama dimulai?",
                 options: {
-                    A: "Fokus sepenuhnya pada latihan soal tanpa menguji kekuatan bandwidth laboratorium komputer.",
-                    B: "Melakukan uji simulasi dan sinkronisasi proktor secara menyeluruh beberapa hari sebelum ujian utama.",
-                    C: "Mengandalkan sistem mandiri siswa tanpa koordinasi dengan tim teknis pusat."
+                    A: "Mengurangi beban pengerjaan soal latihan siswa di sekolah secara sepihak.",
+                    B: "Melakukan uji sinkronisasi proktor, pengecekan cadangan listrik, serta uji kekuatan bandwidth internet beberapa hari sebelumnya.",
+                    C: "Mengandalkan perangkat cadangan ponsel pribadi siswa tanpa melakukan koordinasi teknis.",
+                    D: "Menyerahkan tanggung jawab penuh atas kegagalan teknis server kepada siswa."
                 }
             },
             {
                 id: 2,
-                text: "Sistem CBT ANBK didesain untuk berjalan secara semi-online maupun full-online. Kelemahan terbesar yang harus dimitigasi apabila sekolah Anda menerapkan skema full-online adalah...",
+                stimulusTitle: "Inovasi AKM dan Pengaruhnya bagi Kurikulum",
+                text: "Ujian ANBK didesain untuk memetakan input, proses, dan hasil sistem pendidikan secara utuh. Menurut stimulus, perbedaan paling mencolok antara ANBK dengan model Ujian Nasional yang lama adalah...",
                 options: {
-                    A: "Kebutuhan daya listrik server lokal yang terlalu besar.",
-                    B: "Kerentanan terhadap penurunan kualitas koneksi internet secara mendadak saat sinkronisasi langsung.",
-                    C: "Rumitnya melakukan instalasi Virtual Box pada komputer server proktor."
+                    A: "ANBK menentukan lulus atau tidaknya individu siswa secara absolut.",
+                    B: "ANBK berfokus mengevaluasi kualitas sistem ekosistem sekolah secara menyeluruh melalui survei karakter & lingkungan belajar, bukan menilai capaian individu siswa.",
+                    C: "ANBK hanya dapat dioperasikan secara offline menggunakan kertas cetak.",
+                    D: "ANBK tidak membutuhkan pengawasan ketat dari proktor di ruang server."
                 }
             },
             {
                 id: 3,
-                text: "Seorang Proktor bertugas memantau status token di dashboard admin dan merilis token baru setiap kali waktu rilis token habis. Berapa menit sekali token biasanya diperbarui dalam sistem ujian ANBK resmi?",
+                stimulusTitle: "Pentingnya Manajemen Token",
+                text: "Setiap token ujian memiliki batas aktif berkala. Berdasarkan fungsionalitas aplikasi, tindakan proktor jika siswa melaporkan token kedaluwarsa adalah...",
                 options: {
-                    A: "15 Menit.",
-                    B: "30 Menit.",
-                    C: "60 Menit."
+                    A: "Meminta siswa menghentikan seluruh proses ujian secara permanen.",
+                    B: "Membuka Panel Dashboard Proktor (Admin) untuk merilis token baru secara instan dan membagikannya ke peserta.",
+                    C: "Mereset paksa komputer klien siswa tanpa menyimpan jawaban sebelumnya.",
+                    D: "Menunggu sistem pusat melakukan pembaruan otomatis tanpa intervensi proktor."
                 }
             }
         ];
@@ -875,7 +948,7 @@
         }
 
         // ==========================================
-        // STUDENT FLOW: EXAM SHEET LOGIC (MOCK)
+        // STUDENT FLOW: EXAM SHEET LOGIC (ANBK SPLIT SCREEN STYLE)
         // ==========================================
         let timerInterval;
         function startExamSiswa() {
@@ -915,6 +988,49 @@
             document.getElementById('current-question-num').textContent = index + 1;
             document.getElementById('question-text').textContent = q.text;
 
+            // Dynamically change stimulus text title based on selected question (simulate multiple passages)
+            const stimulusPanel = document.getElementById('stimulus-panel');
+            if (index === 0) {
+                stimulusPanel.innerHTML = `
+                    <h3 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Menuju Era Digitalisasi Pendidikan Indonesia</h3>
+                    <p class="text-sm leading-relaxed">
+                        Evaluasi pendidikan di Indonesia terus beradaptasi dengan kemajuan teknologi dunia. **Asesmen Nasional Berbasis Komputer (ANBK)** merupakan salah satu terobosan strategis Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi untuk menggantikan sistem evaluasi lama demi memetakan mutu pendidikan secara lebih komprehensif, obyektif, dan adil.
+                    </p>
+                    <div class="p-3 bg-blue-50 border-l-4 border-blue-500 rounded text-xs text-blue-900 leading-relaxed italic">
+                        "Evaluasi sejati tidak hanya mengukur akhir dari sebuah pencapaian akademik, tetapi mendiagnosis kesiapan ekosistem pendidikan secara menyeluruh untuk menyongsong tantangan peradaban digital."
+                    </div>
+                    <p class="text-sm leading-relaxed">
+                        Asesmen Nasional tidak mengevaluasi capaian peserta didik secara individu, melainkan mengevaluasi dan memetakan sistem pendidikan baik berupa input, proses, maupun hasil. Instrumen utamanya terdiri dari **Asesmen Kompetensi Minimum (AKM)**, Survei Karakter, serta Survei Lingkungan Belajar. 
+                    </p>
+                    <p class="text-sm leading-relaxed">
+                        AKM dirancang secara holistik untuk mengukur kapasitas berpikir logis-sistematis siswa melalui literasi membaca dan literasi numerasi. Kesiapan jaringan internet (bandwidth), keandalan kelistrikan sekolah, kesiapan proktor dalam melakukan sinkronisasi database, serta distribusi token ujian yang aman merupakan pilar-pilar penting penentu kelancaran pelaksanaan ujian terkomputerisasi ini di lapangan.
+                    </p>
+                `;
+            } else if (index === 1) {
+                stimulusPanel.innerHTML = `
+                    <h3 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Inovasi AKM dan Pengaruhnya bagi Kurikulum</h3>
+                    <p class="text-sm leading-relaxed">
+                        Jika kurikulum sebelumnya berfokus pada seberapa banyak materi pelajaran yang dihafal, kurikulum asesmen modern menuntut fleksibilitas kompetensi penalaran. **AKM (Asesmen Kompetensi Minimum)** menargetkan dua kompetensi mendasar yang dapat digunakan siswa dalam mempelajari subjek apa pun: **Literasi dan Numerasi**.
+                    </p>
+                    <div class="p-3 bg-amber-50 border-l-4 border-amber-500 rounded text-xs text-amber-900 leading-relaxed italic">
+                        "Literasi bukan sekadar mengeja kata, tapi mencerna esensi. Numerasi bukan sekadar menghitung deret, tapi mengalkulasi penyelesaian riil di dunia nyata."
+                    </div>
+                    <p class="text-sm leading-relaxed">
+                        Perubahan mendasar ini berdampak langsung pada paradigma guru dalam mengajar di kelas. Aktivitas pembelajaran kini diarahkan untuk merangsang cara berpikir analitis (High Order Thinking Skills/HOTS) yang memancing daya kritis, memecahkan wacana bacaan yang kompleks, serta merumuskan hipotesis logis atas data kuantitatif yang tersaji.
+                    </p>
+                `;
+            } else {
+                stimulusPanel.innerHTML = `
+                    <h3 class="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Pentingnya Manajemen Token</h3>
+                    <p class="text-sm leading-relaxed">
+                        Dalam model semi-daring atau daring penuh yang diusung ANBK, autentikasi sesi ujian siswa sangat dijaga melalui distribusi sistem token yang acak dan dinamis. Setiap token memiliki rentang masa aktif berkala (biasanya diperbarui setiap 15-30 menit) agar meminimalkan risiko kecurangan.
+                    </p>
+                    <p class="text-sm leading-relaxed">
+                        **Proktor Utama** di sekolah memegang kunci utama pemantauan status token lewat Dashboard Proktor. Apabila token kedaluwarsa sewaktu pengerjaan, siswa tidak dapat melanjutkan ke subtes berikutnya sebelum proktor merilis pembaruan token baru dari server pusat dan mengumumkannya ke ruang ujian.
+                    </p>
+                `;
+            }
+
             // Render options
             const optContainer = document.getElementById('options-container');
             optContainer.innerHTML = '';
@@ -923,42 +1039,63 @@
 
             Object.entries(q.options).forEach(([letter, text]) => {
                 const isChecked = currentAnswerObj.option === letter ? 'checked' : '';
+                // Dynamic styling for selected option
+                const activeLabelClass = currentAnswerObj.option === letter 
+                    ? 'border-blue-500 bg-blue-50/50 ring-2 ring-blue-200' 
+                    : 'border-gray-200 hover:bg-slate-50';
+
                 optContainer.innerHTML += `
-                    <label class="flex items-start p-3 border border-gray-200 rounded-lg hover:bg-blue-50/50 cursor-pointer transition">
-                        <input type="radio" name="exam-option" value="${letter}" ${isChecked} onchange="saveAnswer('${letter}')" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500">
-                        <span class="font-bold text-gray-700 mr-2">${letter}.</span>
-                        <span class="text-gray-600">${text}</span>
+                    <label class="flex items-start p-4 border rounded-xl cursor-pointer transition duration-150 ${activeLabelClass}">
+                        <input type="radio" name="exam-option" value="${letter}" ${isChecked} onchange="saveAnswer('${letter}')" class="mt-1 mr-4 text-blue-600 focus:ring-blue-500 h-4 w-4">
+                        <span class="font-extrabold text-slate-800 mr-2 text-sm sm:text-base">${letter}.</span>
+                        <span class="text-slate-600 text-sm sm:text-base font-medium leading-relaxed">${text}</span>
                     </label>
                 `;
             });
 
-            // Set Ragu-ragu checkbox
+            // Set Ragu-ragu checkbox state
             const checkboxRagu = document.getElementById('ragu-ragu');
             checkboxRagu.checked = !!currentAnswerObj.ragu;
             checkboxRagu.onchange = function() {
                 saveRagu(this.checked);
             };
+
+            // Custom UI adjustments for final question
+            const nextBtn = document.getElementById('next-question-btn');
+            if (index === MOCK_QUESTIONS.length - 1) {
+                nextBtn.innerHTML = 'Selesai Tes <i class="fa-solid fa-flag-checkered ml-1"></i>';
+                nextBtn.className = 'bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 px-3 sm:px-4 rounded shadow-md text-xs sm:text-sm tracking-wider uppercase transition flex items-center gap-1.5';
+            } else {
+                nextBtn.innerHTML = 'Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>';
+                nextBtn.className = 'bg-[#2980b9] hover:bg-[#3498db] text-white font-black py-2 px-3 sm:px-4 rounded shadow-md text-xs sm:text-sm tracking-wider uppercase transition flex items-center gap-1.5';
+            }
         }
 
+        // Render Navigation Map with exact ANBK styling (showing the selected answer letter inside the box!)
         function renderQuestionNav() {
             const grid = document.getElementById('nav-numbers-grid');
             grid.innerHTML = '';
 
             MOCK_QUESTIONS.forEach((q, index) => {
                 const ans = CBT_STATE.answers[q.id] || {};
-                let bgClass = 'border-gray-300 hover:bg-slate-100 text-gray-700';
-                
+                let bgClass = 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50';
+                let answerIndicator = '-'; // Default unanswered sign inside box
+
                 if (ans.option) {
+                    answerIndicator = ans.option; // Show chosen letter (e.g., A, B, C) inside the grid box
                     bgClass = ans.ragu 
-                        ? 'bg-yellow-400 border-yellow-500 text-white font-bold' 
-                        : 'bg-blue-600 border-blue-700 text-white font-bold';
+                        ? 'bg-[#f1c40f] border-yellow-500 text-slate-900 font-extrabold' 
+                        : 'bg-[#2980b9] border-blue-700 text-white font-extrabold';
                 }
 
-                const isActive = CBT_STATE.currentQuestionIndex === index ? 'ring-4 ring-offset-2 ring-blue-500' : '';
+                const isActive = CBT_STATE.currentQuestionIndex === index 
+                    ? 'ring-4 ring-offset-2 ring-blue-600 border-blue-600 font-black' 
+                    : '';
 
                 grid.innerHTML += `
-                    <button onclick="goToQuestion(${index})" class="w-10 h-10 border rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${bgClass} ${isActive}">
-                        ${index + 1}
+                    <button onclick="goToQuestion(${index})" class="h-12 border rounded-xl flex flex-col justify-center items-center transition-all ${bgClass} ${isActive}">
+                        <span class="text-[10px] opacity-75 font-bold">Soal ${index + 1}</span>
+                        <span class="text-sm font-black mt-0.5 tracking-wider">${answerIndicator}</span>
                     </button>
                 `;
             });
@@ -971,6 +1108,9 @@
             }
             CBT_STATE.answers[q.id].option = letter;
             renderQuestionNav();
+            
+            // Re-render question to apply dynamic borders and active bg
+            renderQuestion();
         }
 
         function saveRagu(isRagu) {
@@ -991,20 +1131,36 @@
         function prevQuestion() {
             if (CBT_STATE.currentQuestionIndex > 0) {
                 goToQuestion(CBT_STATE.currentQuestionIndex - 1);
+            } else {
+                alert('Ini adalah soal pertama.');
             }
         }
 
         function nextQuestion() {
             if (CBT_STATE.currentQuestionIndex < MOCK_QUESTIONS.length - 1) {
                 goToQuestion(CBT_STATE.currentQuestionIndex + 1);
+            } else {
+                // If on final question, trigger exam completion flow
+                finishExamMock();
             }
         }
 
         function changeFontSize(size) {
             const el = document.getElementById('question-text');
-            if (size === 'small') el.style.fontSize = '0.875rem';
-            if (size === 'medium') el.style.fontSize = '1rem';
-            if (size === 'large') el.style.fontSize = '1.25rem';
+            const stimulusEl = document.getElementById('stimulus-panel');
+            
+            if (size === 'small') {
+                el.style.fontSize = '0.85rem';
+                stimulusEl.style.fontSize = '0.85rem';
+            }
+            if (size === 'medium') {
+                el.style.fontSize = '1rem';
+                stimulusEl.style.fontSize = '1rem';
+            }
+            if (size === 'large') {
+                el.style.fontSize = '1.2rem';
+                stimulusEl.style.fontSize = '1.2rem';
+            }
         }
 
         function finishExamMock() {
@@ -1024,13 +1180,20 @@
                         <button id="finish-mock-confirm-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg text-sm transition">
                             Ya, Selesai
                         </button>
-                        <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg text-sm transition">
+                        <button id="cancel-finish-btn" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg text-sm transition">
                             Batal
                         </button>
                     </div>
                 </div>
             `;
             document.body.appendChild(overlay);
+
+            // Batal button listener to resume timer
+            document.getElementById('cancel-finish-btn').onclick = function() {
+                overlay.remove();
+                // Resume timer
+                startExamSiswa();
+            }
 
             document.getElementById('finish-mock-confirm-btn').onclick = function() {
                 overlay.remove();
@@ -1080,7 +1243,6 @@
         }
 
         function generateNewToken() {
-            // Generate a random 6-character uppercase string
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             let newToken = '';
             for (let i = 0; i < 6; i++) {
