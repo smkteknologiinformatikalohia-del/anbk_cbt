@@ -87,25 +87,30 @@
     const IconDownload = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>;
     const IconCalendar = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>;
     const IconPrint = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>;
-    const IconBriefcase = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
+    const IconBriefcase = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2H5a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
+    const IconSettings = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><circle cx="12" cy="12" r="3" strokeWidth="2" /></svg>;
 
-    // === DATA AWAL MAPEL ===
-    const INITIAL_SUBJECTS = [
+    // === DATA STANDAR DEFUALT JIKA LOCAL STORAGE KOSONG ===
+    const DEFAULT_SUBJECTS = [
       { id: 'MATEMATIKA', code: 'MAT-01', name: 'MATEMATIKA' },
       { id: 'BAHASA_INDONESIA', code: 'BIN-02', name: 'BAHASA INDONESIA' },
       { id: 'IPA', code: 'IPA-03', name: 'ILMU PENGETAHUAN ALAM (IPA)' },
       { id: 'BAHASA_INGGRIS', code: 'BIG-04', name: 'BAHASA INGGRIS' }
     ];
 
-    // === DATA GURU DEFAULT ===
-    const INITIAL_TEACHERS = [
-      { id: '1', nip: '197805122003121003', name: 'Drs. Hermawan', username: 'hermawan', password: '123' },
-      { id: '2', nip: '198509142010122004', name: 'Sri Mulyani, S.Pd.', username: 'sri', password: '123' },
-      { id: '3', nip: '197410052003121002', name: 'Drs. LA ODE JUMAT, M.Pd', username: 'laode', password: '123' }
+    const DEFAULT_TEACHERS = [
+      { id: '1', nip: '197805122003121003', name: 'Drs. Hermawan', username: 'hermawan', password: '123', subjectId: 'MATEMATIKA' },
+      { id: '2', nip: '198509142010122004', name: 'Sri Mulyani, S.Pd.', username: 'sri', password: '123', subjectId: 'BAHASA_INDONESIA' },
+      { id: '3', nip: '197410052003121002', name: 'Drs. LA ODE JUMAT, M.Pd', username: 'laode', password: '123', subjectId: 'BAHASA_INGGRIS' }
     ];
 
-    // === DATA AWAL SOAL ===
-    const INITIAL_QUESTIONS = {
+    const DEFAULT_ASSIGNMENTS = [
+      { id: 'ASN-1', teacherName: 'Drs. Hermawan', subjectId: 'MATEMATIKA' },
+      { id: 'ASN-2', teacherName: 'Sri Mulyani, S.Pd.', subjectId: 'BAHASA_INDONESIA' },
+      { id: 'ASN-3', teacherName: 'Drs. LA ODE JUMAT, M.Pd', subjectId: 'BAHASA_INGGRIS' }
+    ];
+
+    const DEFAULT_QUESTIONS = {
       MATEMATIKA: [
         {
           id: 1,
@@ -161,7 +166,7 @@
           grade: "X",
           major: "SEMUA JURUSAN",
           type: "ISIAN_SINGKAT", 
-          teacher: "Dra. Elly",
+          teacher: "Drs. Hermawan",
           question: "Berapakah nilai kuadrat dari angka 15?",
           correctAnswer: "225"
         },
@@ -171,7 +176,7 @@
           grade: "X",
           major: "SEMUA JURUSAN",
           type: "URAIAN", 
-          teacher: "Dra. Elly",
+          teacher: "Drs. Hermawan",
           question: "Jelaskan perbedaan antara prisma segitiga dan limas segitiga secara rinci!",
           correctAnswer: "Prisma segitiga memiliki alas dan atap berbentuk segitiga yang kongruen, sedangkan limas segitiga hanya memiliki satu alas berbentuk segitiga dan mengerucut pada satu titik puncak."
         }
@@ -197,13 +202,12 @@
       ]
     };
 
-    const INITIAL_RESULTS = [
+    const DEFAULT_RESULTS = [
       { id: 1, studentName: 'Rian Hidayat', subject: 'MATEMATIKA', score: 100, completedAt: '2026-05-31 09:30' },
       { id: 2, studentName: 'Amel Lestari', subject: 'BAHASA_INDONESIA', score: 50, completedAt: '2026-05-31 10:15' }
     ];
 
-    // === DATA AWAL PESERTA UJIAN ===
-    const INITIAL_STUDENTS = [
+    const DEFAULT_STUDENTS = [
       {
         id: '1',
         nisn: '100135999001',
@@ -234,8 +238,7 @@
       }
     ];
 
-    // === DATA AWAL JADWAL UJIAN ===
-    const INITIAL_SCHEDULES = [
+    const DEFAULT_SCHEDULES = [
       {
         id: 'SCH-01',
         subjectId: 'MATEMATIKA',
@@ -267,22 +270,43 @@
     ];
 
     function App() {
-      const [subjects, setSubjects] = useState(INITIAL_SUBJECTS);
-      const [questions, setQuestions] = useState(INITIAL_QUESTIONS);
-      const [results, setResults] = useState(INITIAL_RESULTS);
-      const [students, setStudents] = useState(INITIAL_STUDENTS);
-      const [schedules, setSchedules] = useState(INITIAL_SCHEDULES);
-      const [teachers, setTeachers] = useState(INITIAL_TEACHERS);
+      // --- LOGIKA HELPER MEMBACA & MENYIMPAN KE LOCALSTORAGE SECARA AMAN ---
+      const getLocalStorage = (key, initialValue) => {
+        try {
+          const item = window.localStorage.getItem(key);
+          return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+          console.error("Gagal membaca LocalStorage: ", error);
+          return initialValue;
+        }
+      };
 
-      // Auth State
-      const [isLoggedIn, setIsLoggedIn] = useState(false);
-      const [userRole, setUserRole] = useState(null); // 'siswa' | 'admin'
-      const [currentUser, setCurrentUser] = useState(null);
-      const [currentUserObj, setCurrentUserObj] = useState(null); // Menyimpan info user aktif lengkap (termasuk tipe: 'guru' jika login sebagai guru)
+      const setLocalStorage = (key, value) => {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+          console.error("Gagal menyimpan ke LocalStorage: ", error);
+        }
+      };
+
+      // --- STATE DENGAN BACKUP LOCAL STORAGE AGAR TIDAK HILANG KETIKA DI-REFRESH ---
+      const [subjects, setSubjects] = useState(() => getLocalStorage('cbt_subjects', DEFAULT_SUBJECTS));
+      const [teachers, setTeachers] = useState(() => getLocalStorage('cbt_teachers', DEFAULT_TEACHERS));
+      const [assignments, setAssignments] = useState(() => getLocalStorage('cbt_assignments', DEFAULT_ASSIGNMENTS));
+      const [questions, setQuestions] = useState(() => getLocalStorage('cbt_questions', DEFAULT_QUESTIONS));
+      const [results, setResults] = useState(() => getLocalStorage('cbt_results', DEFAULT_RESULTS));
+      const [students, setStudents] = useState(() => getLocalStorage('cbt_students', DEFAULT_STUDENTS));
+      const [schedules, setSchedules] = useState(() => getLocalStorage('cbt_schedules', DEFAULT_SCHEDULES));
+
+      // Auth Sesi Aktif
+      const [isLoggedIn, setIsLoggedIn] = useState(() => getLocalStorage('cbt_isLoggedIn', false));
+      const [userRole, setUserRole] = useState(() => getLocalStorage('cbt_userRole', null)); // 'siswa' | 'admin'
+      const [currentUser, setCurrentUser] = useState(() => getLocalStorage('cbt_currentUser', null));
+      const [currentUserObj, setCurrentUserObj] = useState(() => getLocalStorage('cbt_currentUserObj', null));
       
-      // Representasi Jadwal yang dipilih oleh siswa
-      const [selectedScheduleId, setSelectedScheduleId] = useState('SCH-01');
-      const [selectedSubject, setSelectedSubject] = useState('MATEMATIKA');
+      // Representasi Sesi Siswa Aktif
+      const [selectedScheduleId, setSelectedScheduleId] = useState(() => getLocalStorage('cbt_selectedScheduleId', 'SCH-01'));
+      const [selectedSubject, setSelectedSubject] = useState(() => getLocalStorage('cbt_selectedSubject', 'MATEMATIKA'));
 
       // Form Login State
       const [username, setUsername] = useState('');
@@ -299,14 +323,14 @@
       const [generatedToken, setGeneratedToken] = useState('GYNFMV');
       const [tokenError, setTokenError] = useState('');
 
-      // Exam State
-      const [examActive, setExamActive] = useState(false);
-      const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-      const [studentAnswers, setStudentAnswers] = useState({}); 
-      const [doubtfulAnswers, setDoubtfulAnswers] = useState({});
-      const [timeLeft, setTimeLeft] = useState(1800); 
-      const [examFinished, setExamFinished] = useState(false);
-      const [finalScore, setFinalScore] = useState(0);
+      // Exam State (Siswa)
+      const [examActive, setExamActive] = useState(() => getLocalStorage('cbt_examActive', false));
+      const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => getLocalStorage('cbt_currentQuestionIndex', 0));
+      const [studentAnswers, setStudentAnswers] = useState(() => getLocalStorage('cbt_studentAnswers', {})); 
+      const [doubtfulAnswers, setDoubtfulAnswers] = useState(() => getLocalStorage('cbt_doubtfulAnswers', {}));
+      const [timeLeft, setTimeLeft] = useState(() => getLocalStorage('cbt_timeLeft', 1800)); 
+      const [examFinished, setExamFinished] = useState(() => getLocalStorage('cbt_examFinished', false));
+      const [finalScore, setFinalScore] = useState(() => getLocalStorage('cbt_finalScore', 0));
 
       // Admin Panel State
       const [adminTab, setAdminTab] = useState('dashboard');
@@ -360,6 +384,7 @@
       const [newTeacherNameField, setNewTeacherNameField] = useState('');
       const [newTeacherUsername, setNewTeacherUsername] = useState('');
       const [newTeacherPassword, setNewTeacherPassword] = useState('');
+      const [newTeacherSubjectId, setNewTeacherSubjectId] = useState('MATEMATIKA');
 
       // State Form Input Mata Pelajaran Baru (Admin)
       const [newSubjectCode, setNewSubjectCode] = useState('');
@@ -377,6 +402,10 @@
       const [newSchShowResult, setNewSchShowResult] = useState(true);
       const [newSchUseToken, setNewSchUseToken] = useState(true);
 
+      // State Form Input Penugasan Mapel Guru (Admin)
+      const [newAsnTeacherName, setNewAsnTeacherName] = useState('');
+      const [newAsnSubjectId, setNewAsnSubjectId] = useState('MATEMATIKA');
+
       // State Filter untuk Cetak Kartu (Admin)
       const [printFilterSession, setPrintFilterSession] = useState('Semua Sesi');
 
@@ -386,16 +415,42 @@
       const [importPreviewList, setImportPreviewList] = useState([]);
       const [importError, setImportError] = useState('');
 
+      // --- LOGIKA MENGAMANKAN STATE KE LOCALSTORAGE SECARA OTOMATIS ---
+      useEffect(() => { setLocalStorage('cbt_subjects', subjects); }, [subjects]);
+      useEffect(() => { setLocalStorage('cbt_teachers', teachers); }, [teachers]);
+      useEffect(() => { setLocalStorage('cbt_assignments', assignments); }, [assignments]);
+      useEffect(() => { setLocalStorage('cbt_questions', questions); }, [questions]);
+      useEffect(() => { setLocalStorage('cbt_results', results); }, [results]);
+      useEffect(() => { setLocalStorage('cbt_students', students); }, [students]);
+      useEffect(() => { setLocalStorage('cbt_schedules', schedules); }, [schedules]);
+
+      useEffect(() => { setLocalStorage('cbt_isLoggedIn', isLoggedIn); }, [isLoggedIn]);
+      useEffect(() => { setLocalStorage('cbt_userRole', userRole); }, [userRole]);
+      useEffect(() => { setLocalStorage('cbt_currentUser', currentUser); }, [currentUser]);
+      useEffect(() => { setLocalStorage('cbt_currentUserObj', currentUserObj); }, [currentUserObj]);
+
+      useEffect(() => { setLocalStorage('cbt_selectedScheduleId', selectedScheduleId); }, [selectedScheduleId]);
+      useEffect(() => { setLocalStorage('cbt_selectedSubject', selectedSubject); }, [selectedSubject]);
+
+      useEffect(() => { setLocalStorage('cbt_examActive', examActive); }, [examActive]);
+      useEffect(() => { setLocalStorage('cbt_currentQuestionIndex', currentQuestionIndex); }, [currentQuestionIndex]);
+      useEffect(() => { setLocalStorage('cbt_studentAnswers', studentAnswers); }, [studentAnswers]);
+      useEffect(() => { setLocalStorage('cbt_doubtfulAnswers', doubtfulAnswers); }, [doubtfulAnswers]);
+      useEffect(() => { setLocalStorage('cbt_timeLeft', timeLeft); }, [timeLeft]);
+      useEffect(() => { setLocalStorage('cbt_examFinished', examFinished); }, [examFinished]);
+      useEffect(() => { setLocalStorage('cbt_finalScore', finalScore); }, [finalScore]);
+
       // Autoload tab pertama ketika login beralih role
       useEffect(() => {
         if (isLoggedIn && userRole === 'admin') {
           if (currentUserObj && currentUserObj.type === 'guru') {
-            // Jika login sebagai Guru, default langsung ke tab Kelola Soal / questions
             setAdminTab('questions');
-            // Auto-lock penginputan guru sesuai nama guru yang login
             setNewQTeacher(currentUserObj.name);
+            if (currentUserObj.subjectId) {
+              setAdminSelectedSubject(currentUserObj.subjectId);
+              setNewSchSubjectId(currentUserObj.subjectId);
+            }
           } else {
-            // Jika Super Admin utama
             setAdminTab('dashboard');
           }
         }
@@ -407,36 +462,18 @@
         if (listSoal.length > 0 && listSoal[0].teacher) {
           return listSoal[0].teacher;
         }
+        const activeTeacher = teachers.find(t => t.subjectId === selectedSubject);
+        if (activeTeacher) {
+          return activeTeacher.name;
+        }
+        const mappedAsn = assignments.find(asn => asn.subjectId === selectedSubject);
+        if (mappedAsn) {
+          return mappedAsn.teacherName;
+        }
         return "Staf Guru Penguji";
       };
 
-      // Generate random token ketika login sebagai siswa
-      useEffect(() => {
-        if (isLoggedIn && userRole === 'siswa') {
-          const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-          let token = '';
-          for (let i = 0; i < 6; i++) {
-            token += chars.charAt(Math.floor(Math.random() * chars.length));
-          }
-          setGeneratedToken(token);
-          setTokenInput('');
-          setTokenError('');
-        }
-      }, [isLoggedIn, userRole]);
-
-      // Timer Effect
-      useEffect(() => {
-        let timer;
-        if (examActive && timeLeft > 0) {
-          timer = setInterval(() => {
-            setTimeLeft(prev => prev - 1);
-          }, 1000);
-        } else if (timeLeft === 0 && examActive) {
-          handleFinishExam();
-        }
-        return () => clearInterval(timer);
-      }, [examActive, timeLeft]);
-
+      // Format Waktu ke MM:SS
       const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -507,7 +544,7 @@
             setLoginError('Password Siswa salah!');
           }
         } else {
-          // Fallback akun dummy siswa untuk kemudahan demo
+          // Fallback akun dummmy siswa untuk kemudahan demo
           if (password === '123' || password === 'siswa') {
             setUserRole('siswa');
             setIsLoggedIn(true);
@@ -539,7 +576,7 @@
             setExamFinished(false);
             setExamActive(false);
           } else {
-            setLoginError('Username tidak terdaftar!');
+            setLoginError('Username tidak terdaftar! (Gunakan password 123 untuk login instan)');
           }
         }
       };
@@ -554,6 +591,8 @@
         setExamActive(false);
         setExamFinished(false);
         setLoginError('');
+        // Hapus backup pengerjaan ujian siswa ketika log out
+        localStorage.removeItem(`exam_timeLeft_${currentUser}`);
       };
 
       // Validasi Token dan Mulai Ujian
@@ -615,7 +654,6 @@
         setDoubtfulAnswers(prev => ({ ...prev, [questionId]: !prev[questionId] }));
       };
 
-      // Memperbaiki fungsi agar tombol Selesai Ujian bekerja secara dinamis
       const handleFinishExam = () => {
         const activeQuestions = questions[selectedSubject] || [];
         if (activeQuestions.length === 0) {
@@ -674,6 +712,7 @@
         };
 
         setResults(prev => [newResult, ...prev]);
+        localStorage.removeItem(`exam_timeLeft_${currentUser}`);
       };
 
       // Tambah Peserta Ujian Baru (Admin) dengan Jurusan dan Kelas
@@ -730,8 +769,8 @@
       // Tambah Guru Baru (Admin)
       const handleAddTeacher = (e) => {
         e.preventDefault();
-        if (!newTeacherNip.trim() || !newTeacherNameField.trim() || !newTeacherUsername.trim() || !newTeacherPassword.trim()) {
-          alert('Mohon isi semua kolom data guru!');
+        if (!newTeacherNip.trim() || !newTeacherNameField.trim() || !newTeacherUsername.trim() || !newTeacherPassword.trim() || !newTeacherSubjectId) {
+          alert('Mohon isi semua kolom data guru beserta mata pelajaran yang diampu!');
           return;
         }
 
@@ -745,7 +784,8 @@
           nip: newTeacherNip.trim(),
           name: newTeacherNameField.trim(),
           username: newTeacherUsername.trim().toLowerCase(),
-          password: newTeacherPassword.trim()
+          password: newTeacherPassword.trim(),
+          subjectId: newTeacherSubjectId
         };
 
         setTeachers(prev => [...prev, newTeacher]);
@@ -754,6 +794,7 @@
         setNewTeacherNameField('');
         setNewTeacherUsername('');
         setNewTeacherPassword('');
+        setNewTeacherSubjectId(subjects[0]?.id || 'MATEMATIKA');
 
         alert('Data guru baru berhasil ditambahkan!');
       };
@@ -813,7 +854,7 @@
         }
       };
 
-      // Tambah Jadwal Ujian Baru (Admin)
+      // Tambah Jadwal Ujian Baru (Admin/Guru)
       const handleAddSchedule = (e) => {
         e.preventDefault();
         const activeBankName = subjects.find(s => s.id === newSchSubjectId)?.name;
@@ -851,7 +892,36 @@
         alert(`Berhasil mereset status login ujian untuk jadwal ${id}. Siswa dapat melakukan login kembali jika sesi sebelumnya terkunci.`);
       };
 
-      // --- LOGIKA PARSING DAN PROSES IMPORT DATA PESERTA ---
+      // Tambah Penugasan Mata Pelajaran Guru Baru (Admin)
+      const handleAddAssignment = (e) => {
+        e.preventDefault();
+        if (!newAsnTeacherName || !newAsnSubjectId) {
+          alert('Silakan pilih Nama Guru dan Mata Pelajaran!');
+          return;
+        }
+
+        if (assignments.some(asn => asn.teacherName === newAsnTeacherName && asn.subjectId === newAsnSubjectId)) {
+          alert('Pemetaan mapel untuk guru ini sudah terdaftar!');
+          return;
+        }
+
+        const newAsn = {
+          id: `ASN-${Date.now()}`,
+          teacherName: newAsnTeacherName,
+          subjectId: newAsnSubjectId
+        };
+
+        setAssignments(prev => [...prev, newAsn]);
+        alert(`Sukses memetakan ${newAsnTeacherName} sebagai pengampu Mapel ${newAsnSubjectId}`);
+      };
+
+      const handleDeleteAssignment = (id) => {
+        if (confirm("Hapus penugasan mata pelajaran ini?")) {
+          setAssignments(prev => prev.filter(asn => asn.id !== id));
+        }
+      };
+
+      // --- LOGIKA PARSING DAN PROSES IMPORT DATA PESERTA (MENDUKUNG FORMAT KELAS & JURUSAN) ---
       const handleProcessImportData = () => {
         setImportError('');
         if (!importDataText.trim()) {
@@ -869,7 +939,7 @@
           const cols = line.includes('\t') ? line.split('\t') : line.split(',');
 
           if (cols.length < 9) {
-            setImportError(`Error di baris ${i + 1}: Data kurang lengkap. Harus terdapat minimal 9 kolom.`);
+            setImportError(`Error di baris ${i + 1}: Data kurang lengkap. Harus terdapat minimal 9 kolom (NISN, Nama, Gender, Tanggal Lahir, Sesi, Username, Password, Kelas, Jurusan).`);
             return;
           }
 
@@ -920,7 +990,7 @@
 
         if (duplicated.length > 0) {
           const names = duplicated.map(d => d.username).join(', ');
-          if (!confirm(`Peringatan: Username berikut sudah ada di sistem: (${names}). Tetap abaikan duplikasi ini?`)) {
+          if (!confirm("Peringatan: Username tersebut sudah ada di sistem. Tetap abaikan duplikasi ini?")) {
             return;
           }
         }
@@ -947,7 +1017,7 @@
         reader.readAsText(file);
       };
 
-      // Tambah Soal Baru dengan 5 Bentuk Soal (Admin)
+      // Tambah Soal Baru dengan 5 Bentuk Soal (Admin/Guru)
       const handleAddQuestion = (e) => {
         e.preventDefault();
         if (!newQuestionText.trim()) return;
@@ -960,8 +1030,7 @@
           grade: newQGrade,
           major: newQMajor,
           type: newQType,
-          // Jika login sebagai Guru, gunakan nama guru login. Jika Super Admin, gunakan select guru yang aktif.
-          teacher: (currentUserObj && currentUserObj.type === 'guru') ? currentUserObj.name : (newQTeacher || "Guru Pengampu"),
+          teacher: isGuruRole ? currentUser : (newQTeacher || "Guru Pengampu"),
           question: newQuestionText.trim()
         };
 
@@ -977,14 +1046,15 @@
           constructedQuestion.correctAnswer = newCorrectTextAnswer.trim();
         }
 
+        const updatedQuestionsOnSubject = [...(questions[adminSelectedSubject] || []), constructedQuestion];
         setQuestions(prev => ({
           ...prev,
-          [adminSelectedSubject]: [...(prev[adminSelectedSubject] || []), constructedQuestion]
+          [adminSelectedSubject]: updatedQuestionsOnSubject
         }));
 
         setNewQCode('');
         setNewQuestionText('');
-        if (!currentUserObj || currentUserObj.type !== 'guru') {
+        if (!isGuruRole) {
           setNewQTeacher('');
         }
         setNewOptions([
@@ -1015,37 +1085,39 @@
         }
       };
 
-      const toggleCorrectAnswerPGK = (key) => {
-        setNewCorrectAnswerPGK(prev => {
-          if (prev.includes(key)) {
-            return prev.filter(item => item !== key);
-          } else {
-            return [...prev, key];
-          }
-        });
-      };
-
-      // Cetak Semua Kartu Siswa
-      const handlePrintAllCards = () => {
-        window.print();
-      };
-
-      // Filter hasil nilai agar guru hanya melihat mapel miliknya sendiri (berdasarkan author guru di soal)
+      // Filter hasil nilai agar guru hanya melihat mapel miliknya sendiri (berdasarkan author guru di soal atau pemetaan mapel aktif)
       const getFilteredResultsForGuru = () => {
-        if (currentUserObj && currentUserObj.type === 'guru') {
-          // Cari mapel apa saja yang memiliki soal buatan guru yang login
-          const guruMapels = Object.keys(questions).filter(mapelKey => 
-            questions[mapelKey].some(q => q.teacher === currentUserObj.name)
-          );
-          return results.filter(res => guruMapels.includes(res.subject));
+        if (isGuruRole) {
+          return results.filter(res => res.subject === currentUserObj.subjectId);
         }
         return results;
       };
 
-      // Filter jadwal yang aktif dicocokkan dengan sesi murid aktif 
-      const visibleSchedulesForStudent = currentUserObj 
-        ? schedules.filter(sch => sch.session === currentUserObj.session || sch.session === 'Semua Sesi')
-        : schedules;
+      // Filter daftar soal agar guru hanya melihat bank soal miliknya / yang dia ampu berdasarkan pemetaan mapel
+      const getFilteredQuestionsForActiveSubject = () => {
+        const allQuestionsOnSubject = questions[adminSelectedSubject] || [];
+        if (isGuruRole) {
+          if (currentUserObj.subjectId !== adminSelectedSubject) return [];
+          return allQuestionsOnSubject.filter(q => q.teacher === currentUser);
+        }
+        return allQuestionsOnSubject;
+      };
+
+      // Filter mata pelajaran yang bisa dipilih oleh guru untuk membuat soal
+      const getFilteredSubjectsForCreateQuestion = () => {
+        if (isGuruRole) {
+          return subjects.filter(sub => sub.id === currentUserObj.subjectId);
+        }
+        return subjects;
+      };
+
+      // Filter jadwal ujian agar guru hanya melihat jadwal yang didelegasikan kepadanya
+      const getFilteredSchedulesForGuru = () => {
+        if (isGuruRole) {
+          return schedules.filter(sch => sch.subjectId === currentUserObj.subjectId);
+        }
+        return schedules;
+      };
 
       // Filter siswa berdasarkan sesi untuk halaman Cetak Kartu
       const filteredStudentsForPrint = printFilterSession === 'Semua Sesi'
@@ -1267,7 +1339,7 @@
                           </select>
                         </div>
 
-                        {/* Mata Ujian */}
+                        {/* Mata Ujian (Dropdown Pilihan Mapel ANBK, SINKRON KE JADWAL UJIAN AKTIF) */}
                         <div>
                           <label className="block text-xs font-bold text-indigo-700 uppercase mb-1 font-black">Mata Ujian (Pilih Jadwal Ujian Aktif)</label>
                           <select
@@ -1444,7 +1516,7 @@
                           {/* 2. Tipe PGK (Pilihan Ganda Kompleks - Multi Checkbox) */}
                           {((questions[selectedSubject] || [])[currentQuestionIndex]?.type === 'PGK') && (
                             <div className="space-y-3">
-                              <p className="text-xs text-blue-700 italic mb-2">*Anda dapat mencentang lebih dari satu jawaban yang benar.</p>
+                              <p className="text-xs text-blue-705 italic mb-2">*Anda dapat mencentang lebih dari satu jawaban yang benar.</p>
                               {(questions[selectedSubject] || [])[currentQuestionIndex]?.options?.map((opt) => {
                                 const checkedList = studentAnswers[(questions[selectedSubject] || [])[currentQuestionIndex]?.id] || [];
                                 const isSelected = checkedList.includes(opt.key);
@@ -1456,7 +1528,7 @@
                                       isSelected ? 'bg-indigo-50 border-indigo-500 ring-2 ring-indigo-100 shadow-md' : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                                     }`}
                                   >
-                                    <span className={`w-6 h-6 rounded flex items-center justify-center font-bold text-xs shrink-0 ${isSelected ? 'bg-indigo-600 text-white' : 'bg-white border text-gray-650'}`}>
+                                    <span className={`w-6 h-6 rounded flex items-center justify-center font-bold text-xs shrink-0 ${isSelected ? 'bg-indigo-600 text-white' : 'bg-white border text-gray-655'}`}>
                                       {isSelected ? '✓' : opt.key}
                                     </span>
                                     <span className="text-sm">{opt.text}</span>
@@ -1469,7 +1541,7 @@
                           {/* 3. Tipe Menjodohkan */}
                           {((questions[selectedSubject] || [])[currentQuestionIndex]?.type === 'MENJODOHKAN') && (
                             <div className="space-y-4">
-                              <p className="text-xs text-blue-700 italic mb-2">*Cocokkan setiap premis di sebelah kiri dengan pilihan jawaban yang tepat.</p>
+                              <p className="text-xs text-blue-705 italic mb-2">*Cocokkan setiap premis di sebelah kiri dengan pilihan jawaban yang tepat.</p>
                               {(questions[selectedSubject] || [])[currentQuestionIndex]?.pairs?.map((pair, pIdx) => {
                                 const currentMatches = studentAnswers[(questions[selectedSubject] || [])[currentQuestionIndex]?.id] || {};
                                 const selectedMatch = currentMatches[pIdx] || '';
@@ -1480,7 +1552,7 @@
                                     <select
                                       value={selectedMatch}
                                       onChange={(e) => handleSelectAnswer((questions[selectedSubject] || [])[currentQuestionIndex]?.id, { pairIndex: pIdx, matchedRight: e.target.value }, 'MENJODOHKAN')}
-                                      className="border rounded-lg p-2 text-xs bg-white text-gray-850 focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer"
+                                      className="border rounded-lg p-2 text-xs bg-white text-gray-855 focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer"
                                     >
                                       <option value="">-- Pilih Jawaban Cocok --</option>
                                       {(questions[selectedSubject] || [])[currentQuestionIndex]?.pairs?.map((rp, rIdx) => (
@@ -1614,7 +1686,7 @@
                       </div>
                     ) : (
                       <div className="my-6 p-6 bg-gray-50 rounded-2xl inline-block min-w-[200px] border border-dashed">
-                        <p className="text-xs text-indigo-700 font-bold uppercase">Ujian Berhasil Dikirim</p>
+                        <p className="text-xs text-indigo-750 font-bold uppercase">Ujian Berhasil Dikirim</p>
                         <p className="text-sm font-semibold mt-2 text-gray-500">Nilai akan dirilis oleh Guru Mata Pelajaran.</p>
                       </div>
                     )}
@@ -1659,6 +1731,13 @@
                         <IconBriefcase />
                         <span>Data Guru</span>
                       </button>
+                      
+                      {/* PENUGASAN MAPEL GURU */}
+                      <button onClick={() => setAdminTab('assignments')} className={`w-full text-left py-2.5 px-4 rounded-lg text-sm flex items-center gap-3 ${adminTab === 'assignments' ? 'bg-blue-700 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>
+                        <IconSettings />
+                        <span>Penugasan Mapel</span>
+                      </button>
+
                       <button onClick={() => setAdminTab('students')} className={`w-full text-left py-2.5 px-4 rounded-lg text-sm flex items-center gap-3 ${adminTab === 'students' ? 'bg-blue-700 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>
                         <IconUsers />
                         <span>Peserta Ujian</span>
@@ -1726,7 +1805,7 @@
                         </div>
                       </div>
                       <div className="bg-white rounded-xl shadow-sm p-5 border flex items-center gap-3">
-                        <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-lg">📝</div>
+                        <div className="w-10 h-10 bg-emerald-50 text-emerald-650 rounded-lg flex items-center justify-center font-bold text-lg">📝</div>
                         <div>
                           <p className="text-[10px] text-gray-400 font-bold uppercase">Soal</p>
                           <h3 className="text-xl font-black">{Object.values(questions).reduce((a, b) => a + b.length, 0)} Soal</h3>
@@ -1815,7 +1894,7 @@
                               <tr key={subj.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="py-3.5 px-4 font-mono text-gray-500">{index + 1}</td>
                                 <td className="py-3.5 px-4 font-mono font-bold text-blue-700">{subj.code}</td>
-                                <td className="py-3.5 px-4 font-bold text-gray-800 uppercase">{subj.name}</td>
+                                <td className="py-3.5 px-4 font-bold text-gray-850 uppercase">{subj.name}</td>
                                 <td className="py-3.5 px-4 text-center">
                                   <button 
                                     onClick={() => handleDeleteSubject(subj.id)} 
@@ -1844,7 +1923,7 @@
                       </h3>
 
                       <form onSubmit={handleAddTeacher} className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div>
                             <label className="text-xs font-bold text-gray-500 uppercase">NIP / Kode Guru</label>
                             <input 
@@ -1866,6 +1945,18 @@
                               className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500" 
                               required 
                             />
+                          </div>
+                          {/* Form Isian: Mata Pelajaran yang Diampu Guru */}
+                          <div>
+                            <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Mata Pelajaran Diampu</label>
+                            <select 
+                              value={newTeacherSubjectId} 
+                              onChange={(e) => setNewTeacherSubjectId(e.target.value)} 
+                              className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-bold text-blue-700"
+                              required
+                            >
+                              {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                            </select>
                           </div>
                         </div>
 
@@ -1916,6 +2007,7 @@
                               <th className="py-3 px-4 w-16">No.</th>
                               <th className="py-3 px-4">NIP</th>
                               <th className="py-3 px-4">Nama Guru</th>
+                              <th className="py-3 px-4">Mata Pelajaran Diampu</th>
                               <th className="py-3 px-4">Username</th>
                               <th className="py-3 px-4">Password</th>
                               <th className="py-3 px-4 text-center w-24">Aksi</th>
@@ -1926,8 +2018,9 @@
                               <tr key={t.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="py-3 px-4 font-mono text-gray-500">{idx + 1}</td>
                                 <td className="py-3 px-4 font-mono">{t.nip}</td>
-                                <td className="py-3 px-4 font-bold text-gray-800">{t.name}</td>
-                                <td className="py-3 px-4 text-blue-700 font-mono font-bold">{t.username}</td>
+                                <td className="py-3 px-4 font-bold text-gray-850">{t.name}</td>
+                                <td className="py-3 px-4 font-semibold text-blue-800 uppercase">{subjects.find(s => s.id === t.subjectId)?.name || t.subjectId}</td>
+                                <td className="py-3 px-4 text-blue-750 font-mono font-bold">{t.username}</td>
                                 <td className="py-3 px-4 text-red-500 font-mono font-bold">{t.password}</td>
                                 <td className="py-3 px-4 text-center">
                                   <button 
@@ -1935,6 +2028,92 @@
                                     className="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors"
                                     title="Hapus Guru"
                                   >
+                                    <IconTrash />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB: PENUGASAN MAPEL GURU (Hanya Superadmin) */}
+                {adminTab === 'assignments' && !isGuruRole && (
+                  <div className="space-y-6">
+                    <div className="bg-white rounded-xl shadow-sm p-6 border">
+                      <h3 className="text-base font-bold mb-4 flex items-center gap-2 text-indigo-800">
+                        <IconSettings />
+                        <span>Buat Penugasan Mata Pelajaran Guru</span>
+                      </h3>
+
+                      <form onSubmit={handleAddAssignment} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Pilih Guru</label>
+                            <select 
+                              value={newAsnTeacherName} 
+                              onChange={(e) => setNewAsnTeacherName(e.target.value)} 
+                              className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-bold text-slate-800"
+                              required
+                            >
+                              <option value="">-- Pilih Guru --</option>
+                              {teachers.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Pilih Mata Pelajaran Tanggung Jawab</label>
+                            <select 
+                              value={newAsnSubjectId} 
+                              onChange={(e) => setNewAsnSubjectId(e.target.value)} 
+                              className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-bold text-blue-700"
+                              required
+                            >
+                              {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end pt-2">
+                          <button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white font-black py-2.5 px-8 rounded-lg text-sm flex items-center gap-2 shadow-md">
+                            <IconPlus />
+                            <span>Tugaskan Mapel</span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Tabel Daftar Penugasan */}
+                    <div className="bg-white rounded-xl shadow-sm p-6 border">
+                      <h3 className="font-bold text-gray-850 mb-4 flex items-center gap-1.5">
+                        <span>Daftar Distribusi Tanggung Jawab Mapel Guru</span>
+                        <span className="bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded-full text-xs font-bold">{assignments.length} Pemetaan</span>
+                      </h3>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                          <thead>
+                            <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-500">
+                              <th className="py-3 px-4 w-12">No.</th>
+                              <th className="py-3 px-4">Nama Lengkap Guru</th>
+                              <th className="py-3 px-4">Mata Pelajaran Diampu</th>
+                              <th className="py-3 px-4 text-center w-24">Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody className="text-sm divide-y">
+                            {assignments.map((asn, idx) => (
+                              <tr key={asn.id} className="hover:bg-slate-50 transition-colors">
+                                <td className="py-3 px-4 font-mono text-gray-500">{idx + 1}</td>
+                                <td className="py-3 px-4 font-black text-slate-800 uppercase">{asn.teacherName}</td>
+                                <td className="py-3 px-4">
+                                  <span className="bg-blue-50 text-blue-700 font-bold px-2.5 py-1 rounded text-xs">
+                                    {asn.subjectId}
+                                  </span>
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <button onClick={() => handleDeleteAssignment(asn.id)} className="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors">
                                     <IconTrash />
                                   </button>
                                 </td>
@@ -2207,7 +2386,10 @@
                               onChange={(e) => setAdminSelectedSubject(e.target.value)} 
                               className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-semibold text-blue-700"
                             >
-                              {subjects.map(s => <option key={s.id} value={s.id}>({s.code}) {s.name}</option>)}
+                              {/* Guru hanya bisa memilih mata pelajaran yang ditugaskan kepada mereka */}
+                              {getFilteredSubjectsForCreateQuestion().map(s => (
+                                <option key={s.id} value={s.id}>({s.code}) {s.name}</option>
+                              ))}
                             </select>
                           </div>
                           <div>
@@ -2390,7 +2572,7 @@
 
                         {(newQType === 'ISIAN_SINGKAT' || newQType === 'URAIAN') && (
                           <div className="bg-slate-50 p-4 rounded-xl border border-gray-200 space-y-2">
-                            <label className="text-xs font-bold text-gray-650 uppercase block mb-1">
+                            <label className="text-xs font-bold text-gray-655 uppercase block mb-1">
                               {newQType === 'ISIAN_SINGKAT' ? 'Kunci Jawaban Singkat (Case-Insensitive):' : 'Pedoman Penskoran / Kunci Uraian:'}
                             </label>
                             {newQType === 'ISIAN_SINGKAT' ? (
@@ -2429,7 +2611,7 @@
                         <h3 className="font-bold text-gray-800 flex items-center gap-1.5">
                           <span>Daftar Bank Soal Aktif</span>
                           <span className="bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded-full text-xs font-bold">
-                            {(questions[adminSelectedSubject] || []).length} Soal
+                            {getFilteredQuestionsForActiveSubject().length} Soal
                           </span>
                         </h3>
                         <div className="flex items-center gap-2">
@@ -2439,7 +2621,10 @@
                             onChange={(e) => setAdminSelectedSubject(e.target.value)} 
                             className="border border-gray-300 rounded-lg py-1.5 px-3 text-xs focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50 font-semibold cursor-pointer"
                           >
-                            {subjects.map(s => <option key={s.id} value={s.id}>({s.code}) {s.name}</option>)}
+                            {/* Guru hanya melihat mata pelajaran yang ditugaskan */}
+                            {getFilteredSubjectsForCreateQuestion().map(s => (
+                              <option key={s.id} value={s.id}>({s.code}) {s.name}</option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -2459,12 +2644,12 @@
                             </tr>
                           </thead>
                           <tbody className="text-xs divide-y">
-                            {(questions[adminSelectedSubject] || []).length === 0 ? (
+                            {getFilteredQuestionsForActiveSubject().length === 0 ? (
                               <tr>
-                                <td colSpan="8" className="py-8 text-center text-gray-400">Belum ada daftar soal untuk mata pelajaran ini.</td>
+                                <td colSpan="8" className="py-8 text-center text-gray-400">Belum ada daftar soal untuk mata pelajaran ini atau Anda belum ditugaskan untuk mengampu mapel ini.</td>
                               </tr>
                             ) : (
-                              (questions[adminSelectedSubject] || []).map((q, idx) => (
+                              getFilteredQuestionsForActiveSubject().map((q, idx) => (
                                 <tr key={q.id} className="hover:bg-slate-50 transition-colors">
                                   <td className="py-3 px-4 font-mono text-gray-500">{idx + 1}</td>
                                   <td className="py-3 px-4 font-mono font-bold text-gray-700">{q.code}</td>
@@ -2497,7 +2682,7 @@
                   </div>
                 )}
 
-                {/* TAB: KELOLA JADWAL UJIAN (Guru & Admin) */}
+                {/* TAB: KELOLA JADWAL UJIAN */}
                 {adminTab === 'schedules' && (
                   <div className="space-y-6">
                     
@@ -2517,7 +2702,9 @@
                               onChange={(e) => setNewSchSubjectId(e.target.value)} 
                               className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-semibold text-blue-700"
                             >
-                              {subjects.map(s => <option key={s.id} value={s.id}>({s.code}) {s.name}</option>)}
+                              {getFilteredSubjectsForCreateQuestion().map(s => (
+                                <option key={s.id} value={s.id}>({s.code}) {s.name}</option>
+                              ))}
                             </select>
                           </div>
                           
@@ -2529,10 +2716,10 @@
                               className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-bold text-indigo-800"
                             >
                               <option value="SIMULASI ANBK">SIMULASI ANBK</option>
-                              <option value="PTS">PENILAIAN TENGAH SEMESTER (PTS)</option>
-                              <option value="PAS">PENILAIAN AKHIR SEMESTER (PAS)</option>
-                              <option value="PAT">PENILAIAN AKHIR TAHUN (PAT)</option>
-                              <option value="US">UJIAN SEKOLAH (US)</option>
+                              <option value="PTS">PTS</option>
+                              <option value="PAS">PAS</option>
+                              <option value="PAT">PAT</option>
+                              <option value="US">US</option>
                             </select>
                           </div>
 
@@ -2646,7 +2833,7 @@
                     <div className="bg-white rounded-xl shadow-sm p-6 border">
                       <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-1.5">
                         <span>Daftar Sesi Jadwal Ujian Aktif</span>
-                        <span className="bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full text-xs font-bold">{schedules.length} Sesi</span>
+                        <span className="bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full text-xs font-bold">{getFilteredSchedulesForGuru().length} Sesi</span>
                       </h3>
 
                       <div className="overflow-x-auto">
@@ -2665,7 +2852,7 @@
                             </tr>
                           </thead>
                           <tbody className="text-xs divide-y">
-                            {schedules.map((sch, index) => {
+                            {getFilteredSchedulesForGuru().map((sch, index) => {
                               const mapelName = subjects.find(s => s.id === sch.subjectId)?.name || sch.subjectId;
                               return (
                                 <tr key={sch.id} className="hover:bg-slate-50 transition-colors">
@@ -2717,7 +2904,7 @@
                   </div>
                 )}
 
-                {/* TAB: CETAK KARTU UJIAN (Hanya Superadmin) */}
+                {/* TAB: CETAK KARTU UJIAN */}
                 {adminTab === 'printCards' && !isGuruRole && (
                   <div className="space-y-6">
                     
@@ -2783,6 +2970,7 @@
                                 <span className="mr-2">:</span>
                                 <span className="font-black text-gray-900 uppercase">{st.name}</span>
                               </div>
+                              {/* Tambah Kelas & Jurusan di Kartu Ujian */}
                               <div className="flex">
                                 <span className="w-24 text-gray-500 font-bold">Kelas / Jurusan</span>
                                 <span className="mr-2">:</span>
@@ -2838,7 +3026,7 @@
                   </div>
                 )}
 
-                {/* TAB: Hasil Nilai (Menampilkan Hasil Ujian) */}
+                {/* TAB: Hasil Nilai */}
                 {adminTab === 'results' && (
                   <div className="bg-white rounded-xl shadow-sm p-6 border">
                     <h3 className="font-bold mb-4 text-gray-800">Hasil Nilai Ujian Siswa</h3>
