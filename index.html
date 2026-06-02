@@ -622,6 +622,12 @@
       const handleConfirmSubmit = (e) => {
         e.preventDefault();
         
+        // PENGAMAN MANDATORI: Cek apakah hari ini siswa sudah pernah menyelesaikan mapel ini
+        if (hasCompletedToday) {
+          setTokenError('Akses Ditolak: Anda sudah menyelesaikan sesi ujian untuk mata pelajaran ini hari ini!');
+          return;
+        }
+
         const activeSch = (schedules || []).find(s => s.id === selectedScheduleId);
         
         if (activeSch && activeSch.useToken) {
@@ -1042,74 +1048,6 @@
         reader.readAsText(file);
       };
 
-      // Tambah Soal Baru dengan 5 Bentuk Soal (Admin/Guru)
-      const handleAddQuestion = (e) => {
-        e.preventDefault();
-        if (!newQuestionText.trim()) return;
-
-        const codeVal = newQCode.trim().toUpperCase() || `SOAL-${Date.now().toString().slice(-4)}`;
-        
-        let constructedQuestion = {
-          id: Date.now(),
-          code: codeVal,
-          grade: newQGrade,
-          major: newQMajor,
-          type: newQType,
-          teacher: isGuruRole ? currentUser : (newQTeacher || "Guru Pengampu"),
-          question: newQuestionText.trim()
-        };
-
-        if (newQType === 'PG') {
-          constructedQuestion.options = [...newOptions];
-          constructedQuestion.correctAnswer = newCorrectAnswerPG;
-        } else if (newQType === 'PGK') {
-          constructedQuestion.options = [...newOptions];
-          constructedQuestion.correctAnswer = [...newCorrectAnswerPGK];
-        } else if (newQType === 'MENJODOHKAN') {
-          constructedQuestion.pairs = newPairs.filter(p => p.left.trim() !== '');
-        } else if (newQType === 'ISIAN_SINGKAT' || newQType === 'URAIAN') {
-          constructedQuestion.correctAnswer = newCorrectTextAnswer.trim();
-        }
-
-        const updatedQuestionsOnSubject = [...((questions && questions[adminSelectedSubject]) || []), constructedQuestion];
-        setQuestions(prev => ({
-          ...prev,
-          [adminSelectedSubject]: updatedQuestionsOnSubject
-        }));
-
-        setNewQCode('');
-        setNewQuestionText('');
-        if (!isGuruRole) {
-          setNewQTeacher('');
-        }
-        setNewOptions([
-          { key: 'A', text: '' },
-          { key: 'B', text: '' },
-          { key: 'C', text: '' },
-          { key: 'D', text: '' },
-          { key: 'E', text: '' }
-        ]);
-        setNewCorrectAnswerPG('A');
-        setNewCorrectAnswerPGK([]);
-        setNewPairs([
-          { left: '', right: '' },
-          { left: '', right: '' },
-          { left: '', right: '' }
-        ]);
-        setNewCorrectTextAnswer('');
-
-        alert('Soal baru berhasil disimpan ke bank soal!');
-      };
-
-      const handleDeleteQuestion = (subjectKey, questionId) => {
-        if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
-          setQuestions(prev => ({
-            ...prev,
-            [subjectKey]: (prev[subjectKey] || []).filter(q => q.id !== questionId)
-          }));
-        }
-      };
-
       // Filter hasil nilai agar guru hanya melihat mapel miliknya sendiri (berdasarkan author guru di soal atau pemetaan mapel aktif)
       const getFilteredResultsForGuru = () => {
         if (isGuruRole && currentUserObj) {
@@ -1156,6 +1094,23 @@
       const visibleSchedulesForStudent = currentUserObj 
         ? (schedules || []).filter(sch => sch.session === currentUserObj.session || sch.session === 'Semua Sesi')
         : (schedules || []);
+
+      // Format tanggal hari ini untuk pendeteksian batasan ujian
+      const todayStr = `${new Date().getFullYear()}-${(new Date().getMonth()+1).toString().padStart(2,'0')}-${new Date().getDate().toString().padStart(2,'0')}`;
+      
+      // Deteksi apakah siswa yang sedang aktif login sudah menyelesaikan ujian pada mapel ini hari ini
+      const hasCompletedToday = (results || []).some(res => 
+        res.studentName === currentUser && 
+        res.subject === selectedSubject && 
+        res.completedAt && res.completedAt.startsWith(todayStr)
+      );
+
+      // Mengambil rekam data riwayat ujian siswa hari ini jika ada
+      const todayResultObj = (results || []).find(res => 
+        res.studentName === currentUser && 
+        res.subject === selectedSubject && 
+        res.completedAt && res.completedAt.startsWith(todayStr)
+      );
 
       return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-between font-sans selection:bg-blue-200">
@@ -1451,26 +1406,42 @@
                           </div>
                         </div>
 
-                        {(!selectedScheduleId || ((schedules || []).find(s => s.id === selectedScheduleId)?.useToken)) && (
-                          <div className="pt-2">
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Token</label>
-                            <input 
-                              type="text" 
-                              value={tokenInput} 
-                              onChange={(e) => setTokenInput(e.target.value.toUpperCase())}
-                              placeholder="Masukkan Token"
-                              maxLength="6"
-                              className="w-full text-gray-800 text-sm py-2 px-3 border border-gray-300 rounded outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 uppercase tracking-widest font-mono font-bold"
-                              required
-                            />
-                            
-                            <div className="mt-3 bg-amber-50 border-l-4 border-amber-500 p-3 rounded flex justify-between items-center">
-                              <span className="text-xs text-amber-800">INFO TOKEN AKTIF:</span>
-                              <span className="font-mono font-black bg-amber-200 text-amber-950 px-3 py-1 rounded text-sm tracking-wider select-all animate-pulse">
-                                {generatedToken}
-                              </span>
-                            </div>
+                        {/* INPUT TOKEN DAN BLOK KEAMANAN KHUSUS HARIAN */}
+                        {hasCompletedToday ? (
+                          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded text-xs text-red-700 space-y-1.5">
+                            <p className="font-bold flex items-center gap-1.5 text-red-850">
+                              <IconAlertTriangle />
+                              <span>Akses Ujian Terkunci</span>
+                            </p>
+                            <p className="leading-relaxed">
+                              Anda sudah menyelesaikan ujian untuk mata pelajaran <strong>{(subjects || []).find(s => s.id === selectedSubject)?.name}</strong> hari ini pada <strong>{todayResultObj ? todayResultObj.completedAt : "-"}</strong>.
+                            </p>
+                            <p className="font-semibold text-red-900">
+                              Setiap peserta ujian hanya diperbolehkan menyelesaikan ujian 1 kali per hari untuk setiap mata pelajaran.
+                            </p>
                           </div>
+                        ) : (
+                          (!selectedScheduleId || ((schedules || []).find(s => s.id === selectedScheduleId)?.useToken)) && (
+                            <div className="pt-2">
+                              <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Token</label>
+                              <input 
+                                type="text" 
+                                value={tokenInput} 
+                                onChange={(e) => setTokenInput(e.target.value.toUpperCase())}
+                                placeholder="Masukkan Token"
+                                maxLength="6"
+                                className="w-full text-gray-800 text-sm py-2 px-3 border border-gray-300 rounded outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 uppercase tracking-widest font-mono font-bold"
+                                required
+                              />
+                              
+                              <div className="mt-3 bg-amber-50 border-l-4 border-amber-500 p-3 rounded flex justify-between items-center">
+                                <span className="text-xs text-amber-800">INFO TOKEN AKTIF:</span>
+                                <span className="font-mono font-black bg-amber-200 text-amber-950 px-3 py-1 rounded text-sm tracking-wider select-all animate-pulse">
+                                  {generatedToken}
+                                </span>
+                              </div>
+                            </div>
+                          )
                         )}
 
                         {tokenError && (
@@ -1483,7 +1454,12 @@
                         <div className="pt-4">
                           <button 
                             type="submit"
-                            className="w-full bg-[#1e40af] hover:bg-blue-800 text-white font-semibold py-3 rounded shadow-md transition-colors text-sm uppercase tracking-wider"
+                            disabled={hasCompletedToday}
+                            className={`w-full font-semibold py-3 rounded shadow-md transition-all text-sm uppercase tracking-wider ${
+                              hasCompletedToday 
+                              ? 'bg-gray-300 text-gray-500 cursor-not-allowed border-none' 
+                              : 'bg-[#1e40af] hover:bg-blue-800 text-white'
+                            }`}
                           >
                             Submit
                           </button>
@@ -1924,7 +1900,7 @@
                               <tr key={subj.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="py-3.5 px-4 font-mono text-gray-500">{index + 1}</td>
                                 <td className="py-3.5 px-4 font-mono font-bold text-blue-700">{subj.code}</td>
-                                <td className="py-3.5 px-4 font-bold text-gray-850 uppercase">{subj.name}</td>
+                                <td className="py-3.5 px-4 font-bold text-gray-855 uppercase">{subj.name}</td>
                                 <td className="py-3.5 px-4 text-center">
                                   <button 
                                     onClick={() => handleDeleteSubject(subj.id)} 
