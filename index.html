@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CBT - SMK Swasta Teknologi Informatika Lohia</title>
+  <title>CBT - SMKS Teknologi Informatika Lohia</title>
   
   <!-- Tailwind CSS untuk Styling Modern -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -146,7 +146,6 @@
       { id: 'BAHASA_INGGRIS', code: 'BIG-04', name: 'BAHASA INGGRIS' }
     ];
 
-    // PEMBARUAN: Mengganti Drs. LA ODE JUMAT, M.Pd dengan Sahrul, S.Pd
     const DEFAULT_TEACHERS = [
       { id: '1', nip: '197805122003121003', name: 'Drs. Hermawan', username: 'hermawan', password: '123', subjectId: 'MATEMATIKA' },
       { id: '2', nip: '198509142010122004', name: 'Sri Mulyani, S.Pd.', username: 'sri', password: '123', subjectId: 'BAHASA_INDONESIA' },
@@ -1085,6 +1084,74 @@
         reader.readAsText(file);
       };
 
+      // Tambah Soal Baru dengan 5 Bentuk Soal (Admin/Guru)
+      const handleAddQuestion = (e) => {
+        e.preventDefault();
+        if (!newQuestionText.trim()) return;
+
+        const codeVal = newQCode.trim().toUpperCase() || `SOAL-${Date.now().toString().slice(-4)}`;
+        
+        let constructedQuestion = {
+          id: Date.now(),
+          code: codeVal,
+          grade: newQGrade,
+          major: newQMajor,
+          type: newQType,
+          teacher: isGuruRole ? currentUser : (newQTeacher || "Guru Pengampu"),
+          question: newQuestionText.trim()
+        };
+
+        if (newQType === 'PG') {
+          constructedQuestion.options = [...newOptions];
+          constructedQuestion.correctAnswer = newCorrectAnswerPG;
+        } else if (newQType === 'PGK') {
+          constructedQuestion.options = [...newOptions];
+          constructedQuestion.correctAnswer = [...newCorrectAnswerPGK];
+        } else if (newQType === 'MENJODOHKAN') {
+          constructedQuestion.pairs = newPairs.filter(p => p.left.trim() !== '');
+        } else if (newQType === 'ISIAN_SINGKAT' || newQType === 'URAIAN') {
+          constructedQuestion.correctAnswer = newCorrectTextAnswer.trim();
+        }
+
+        const updatedQuestionsOnSubject = [...((questions && questions[adminSelectedSubject]) || []), constructedQuestion];
+        setQuestions(prev => ({
+          ...prev,
+          [adminSelectedSubject]: updatedQuestionsOnSubject
+        }));
+
+        setNewQCode('');
+        setNewQuestionText('');
+        if (!isGuruRole) {
+          setNewQTeacher('');
+        }
+        setNewOptions([
+          { key: 'A', text: '' },
+          { key: 'B', text: '' },
+          { key: 'C', text: '' },
+          { key: 'D', text: '' },
+          { key: 'E', text: '' }
+        ]);
+        setNewCorrectAnswerPG('A');
+        setNewCorrectAnswerPGK([]);
+        setNewPairs([
+          { left: '', right: '' },
+          { left: '', right: '' },
+          { left: '', right: '' }
+        ]);
+        setNewCorrectTextAnswer('');
+
+        alert('Soal baru berhasil disimpan ke bank soal!');
+      };
+
+      const handleDeleteQuestion = (subjectKey, questionId) => {
+        if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
+          setQuestions(prev => ({
+            ...prev,
+            [subjectKey]: (prev[subjectKey] || []).filter(q => q.id !== questionId)
+          }));
+        }
+      };
+
       // Filter hasil nilai agar guru hanya melihat mapel miliknya sendiri (berdasarkan author guru di soal atau pemetaan mapel aktif)
       const getFilteredResultsForGuru = () => {
         if (isGuruRole && currentUserObj) {
@@ -1216,7 +1283,7 @@
                   <p className="text-gray-500">Lohia, {activePrintSlip.completedAt.split(' ')[0]}</p>
                   <p className="mb-12">Kepala Sekolah,</p>
                   <p className="font-extrabold underline uppercase">Sahrul, S.Pd</p>
-                  <p className="text-[10px] text-gray-450 font-mono mt-0.5">NIP. 199105042022211004</p>
+                  <p className="text-[10px] text-gray-455 font-mono mt-0.5">NIP. 199105042022211004</p>
                 </div>
               </div>
 
@@ -1260,7 +1327,7 @@
                     
                     <div>
                       <h1 className="text-xl md:text-2xl font-bold tracking-wider uppercase text-shadow">
-                        SMK SW. TEKNOLOGI INFORMATIKA LOHIA
+                        SMK SWASTA TEKNOLOGI INFORMATIKA LOHIA
                       </h1>
                       <p className="text-xs md:text-sm text-blue-100 font-medium tracking-widest mt-0.5">
                         SMK TI LOHIA CBT - UJIAN ONLINE TERPADU
@@ -1327,7 +1394,7 @@
 
                     <button
                       type="submit"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-full shadow-lg transition-colors duration-200 text-sm mt-4 flex items-center justify-center gap-2"
+                      className="w-full bg-blue-600 hover:bg-blue-755 text-white font-medium py-3 px-4 rounded-full shadow-lg transition-colors duration-200 text-sm mt-4 flex items-center justify-center gap-2"
                     >
                       <span>Login</span>
                       <IconChevronRight />
@@ -1666,7 +1733,7 @@
                           {/* 3. Tipe Menjodohkan */}
                           {(((questions && questions[selectedSubject]) || [])[currentQuestionIndex]?.type === 'MENJODOHKAN') && (
                             <div className="space-y-4">
-                              <p className="text-xs text-blue-755 italic mb-2">*Cocokkan setiap premis di sebelah kiri dengan pilihan jawaban yang tepat.</p>
+                              <p className="text-xs text-blue-705 italic mb-2">*Cocokkan setiap premis di sebelah kiri dengan pilihan jawaban yang tepat.</p>
                               {((questions && questions[selectedSubject]) || [])[currentQuestionIndex]?.pairs?.map((pair, pIdx) => {
                                 const currentMatches = studentAnswers[((questions && questions[selectedSubject]) || [])[currentQuestionIndex]?.id] || {};
                                 const selectedMatch = currentMatches[pIdx] || '';
@@ -1828,7 +1895,7 @@
 
           {/* ==================== 3. TAMPILAN ADMIN / GURU (MANAJEMEN PORTAL) ==================== */}
           {isLoggedIn && userRole === 'admin' && (
-            <div className="flex-grow flex flex-col md:flex-row">
+            <div className="flex-grow flex flex-col md:flex-row no-print">
               <aside className="w-full md:w-64 bg-slate-900 text-slate-100 shrink-0 shadow-lg no-print">
                 <div className="p-6 border-b border-slate-800 flex items-center gap-3 bg-slate-950">
                   <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
@@ -2128,7 +2195,7 @@
                       <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                           <thead>
-                            <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-500">
+                            <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-505">
                               <th className="py-3 px-4 w-16">No.</th>
                               <th className="py-3 px-4">NIP</th>
                               <th className="py-3 px-4">Nama Guru</th>
@@ -2189,7 +2256,7 @@
                             </select>
                           </div>
                           <div>
-                            <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Pilih Mata Pelajaran Tanggung Jawab</label>
+                            <label className="text-xs font-bold text-gray-505 uppercase block mb-1">Pilih Mata Pelajaran Tanggung Jawab</label>
                             <select 
                               value={newAsnSubjectId} 
                               onChange={(e) => setNewAsnSubjectId(e.target.value)} 
@@ -2482,7 +2549,7 @@
                   </div>
                 )}
 
-                {/* TAB: KELOLA SOAL */}
+                {/* TAB: KELOLA SOAL (Guru & Admin) */}
                 {adminTab === 'questions' && (
                   <div className="space-y-6">
                     <div className="bg-white rounded-xl shadow-sm p-6 border">
@@ -2623,7 +2690,7 @@
                                 <select 
                                   value={newCorrectAnswerPG} 
                                   onChange={(e) => setNewCorrectAnswerPG(e.target.value)}
-                                  className="w-full border rounded-lg p-2.5 text-xs font-bold text-emerald-700 bg-white border-gray-300"
+                                  className="w-full border rounded-lg p-2.5 text-sm bg-white outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer font-bold text-emerald-700 bg-white border-gray-300"
                                 >
                                   {newOptions.map(o => <option key={o.key} value={o.key}>Pilihan {o.key}</option>)}
                                 </select>
@@ -2964,7 +3031,7 @@
                       <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                           <thead>
-                            <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-500">
+                            <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-505">
                               <th className="py-3 px-4 w-12">No.</th>
                               <th className="py-3 px-4">Bank Soal (Mapel)</th>
                               <th className="py-3 px-4">Jenis Ujian</th>
@@ -3177,7 +3244,7 @@
                   </div>
                 )}
 
-                {/* TAB: Hasil Nilai (Dengan Fitur Cetak Laporan & Cetak Slip Individual) */}
+                {/* TAB: Hasil Nilai */}
                 {adminTab === 'results' && (
                   <div className="bg-white rounded-xl shadow-sm p-6 border no-print">
                     
@@ -3203,7 +3270,7 @@
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-500">
+                          <tr className="border-b bg-slate-50 text-xs font-bold uppercase text-gray-505">
                             <th className="py-3 px-4 w-12">No.</th>
                             <th className="py-3 px-4">Nama Siswa</th>
                             <th className="py-3 px-4">Mapel</th>
@@ -3317,7 +3384,7 @@
                         <p className="text-gray-500">Lohia, {todayStr}</p>
                         <p className="mb-12">Kepala Sekolah,</p>
                         <p className="font-extrabold underline uppercase">Sahrul, S.Pd</p>
-                        <p className="text-[10px] text-gray-450 font-mono mt-0.5">NIP. 199105042022211004</p>
+                        <p className="text-[10px] text-gray-455 font-mono mt-0.5">NIP. 199105042022211004</p>
                       </div>
                     </div>
                   </div>
@@ -3474,7 +3541,7 @@
                     disabled={importPreviewList.length === 0}
                     className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold py-2 px-6 rounded-lg text-xs shadow transition-colors"
                   >
-                    Simpan Semua Ke Database ({importPreviewList.length})
+                    Simpan Semua Ke Database ({(importPreviewList || []).length})
                   </button>
                 </div>
 
